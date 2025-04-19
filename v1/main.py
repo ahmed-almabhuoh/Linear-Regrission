@@ -3,6 +3,11 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 import statsmodels.api as sm
+import os
+
+# Ensure output directory exists
+output_dir = "C:/Users/Aseel Almabhouh/Desktop/Assignment/v1/plots"
+os.makedirs(output_dir, exist_ok=True)
 
 # Dataset
 Y = np.array([43, 63, 71, 61, 81, 43, 58, 71, 72, 67, 64, 67, 69, 68, 77, 81, 74, 65, 65, 50, 50, 64, 53, 40, 63, 66, 78, 48, 85, 82])
@@ -52,6 +57,7 @@ for i, (X_var, var_name) in enumerate(zip([X1, X2, X3, X4, X5, X6], variables)):
     print(f"Adjusted R²: {adj_r2:.4f}")
     print(f"MSE: {mse:.2f}")
     
+    # Generate and save plot
     plt.figure(figsize=(8, 6))
     plt.scatter(X_var, Y, color='blue', label='Data points')
     plt.plot(X_var, y_pred, color='red', label='Regression line')
@@ -60,7 +66,10 @@ for i, (X_var, var_name) in enumerate(zip([X1, X2, X3, X4, X5, X6], variables)):
     plt.title(f'Simple Linear Regression: Y vs {var_name}\nR² = {r2:.4f}')
     plt.legend()
     plt.grid(True)
-    plt.savefig(f'regression_{var_name}.png')
+    plot_path = os.path.join(output_dir, f'regression_{var_name}.png')
+    plt.savefig(plot_path)
+    print(f"Saved plot: {plot_path}")
+    # plt.show()  # Uncomment to display plots interactively
     plt.close()
 
 model_multi = LinearRegression()
@@ -93,6 +102,7 @@ print(f"R²: {r2_multi:.4f}")
 print(f"Adjusted R²: {adj_r2_multi:.4f}")
 print(f"MSE: {mse_multi:.2f}")
 
+# Generate and save plot for multiple regression
 plt.figure(figsize=(8, 6))
 plt.scatter(Y, y_pred_multi, color='blue', label='Predicted vs Actual')
 plt.plot([Y.min(), Y.max()], [Y.min(), Y.max()], color='red', linestyle='--', label='Ideal fit')
@@ -101,7 +111,10 @@ plt.ylabel('Predicted Y')
 plt.title(f'Multiple Linear Regression: Predicted vs Actual\nR² = {r2_multi:.4f}')
 plt.legend()
 plt.grid(True)
-plt.savefig('regression_multiple.png')
+plot_path = os.path.join(output_dir, 'regression_multiple.png')
+plt.savefig(plot_path)
+print(f"Saved plot: {plot_path}")
+# plt.show()  # Uncomment to display plots interactively
 plt.close()
 
 # Question (b): Hypothesis Testing
